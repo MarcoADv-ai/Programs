@@ -1,0 +1,8 @@
+*.swp
+node_modules/
+output/
+out/
+data/
+extract/
+data.grf
+rdata.grf

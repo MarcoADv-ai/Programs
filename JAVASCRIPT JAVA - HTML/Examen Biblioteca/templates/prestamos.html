@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Préstamos</title>
+    <style>
+    body { font-family: Arial, sans-serif; background-color: #f4f7fc; padding: 20px; }
+    table { width: 80%; margin: 20px auto; border-collapse: collapse; background-color: #fff; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+    th, td { padding: 12px; text-align: center; border: 1px solid #ddd; }
+    th { background-color: #007BFF; color: white; }
+    </style>
+</head>
+<body>
+
+    <h1>Registro de Préstamos</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Libro</th>
+                <th>Sexo</th>
+            </tr>
+        </thead>
+        <tbody id="tablaPrestamos"></tbody> <!-- Aquí se llenarán los datos -->
+    </table>
+
+    <script>
+    async function obtenerPrestamos() {
+    const respuesta = await fetch('/prestamos');  // Solicitar los datos de la ruta /prestamos
+    const prestamos = await respuesta.json();  // Parseamos el JSON recibido
+    const tablaPrestamos = document.getElementById('tablaPrestamos');
+    tablaPrestamos.innerHTML = '';  // Limpiamos la tabla antes de agregar nuevas filas
+
+    prestamos.forEach(prestamo => {
+        const fila = document.createElement('tr');
+        fila.innerHTML = `
+            <td>${prestamo.id}</td>
+            <td>${prestamo.nombre}</td>
+            <td>${prestamo.libro.titulo}</td>
+            <td>${prestamo.sexo}</td>
+        `;
+        tablaPrestamos.appendChild(fila);  // Agregar la fila a la tabla
+    });
+}
+
+obtenerPrestamos();  // Llamar a la función cuando la página cargue
+
+    </script>
+
+</body>
+</html>

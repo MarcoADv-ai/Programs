@@ -1,0 +1,85 @@
+commit 8a66ce3acb475616f7c5fc05afb511a7628c3b9c
+Author: Eduardo Bueno Lopez <edubul23@gmail.com>
+Date:   Mon Aug 26 20:59:57 2024 -0600
+
+    Battleground[Easycore] rev_21 to xPanel
+
+diff --git a/app/Http/Controllers/RankingsController.php b/app/Http/Controllers/RankingsController.php
+index c6347ca..47d8c67 100644
+--- a/app/Http/Controllers/RankingsController.php
++++ b/app/Http/Controllers/RankingsController.php
+@@ -103,14 +103,14 @@ public function battleground(Request $request)
+             'guild.name as gname',
+             'guild.emblem_len',
+             'guild.emblem_data',
+-            'rank_bg.*'
++            'char_bg.*'
+         ])
+-            ->join('char', 'rank_bg.char_id', '=', 'char.char_id')
++            ->join('char', 'char_bg.char_id', '=', 'char.char_id')
+             ->join('login', 'char.account_id', '=', 'login.account_id')
+             ->leftJoin('guild', 'char.guild_id', '=', 'guild.guild_id')
+             ->join('users', 'login.master_acc_id', '=', 'users.id')
+             ->where('login.group_id', '<', '80')
+-            ->where('rank_bg.score', '>=', '0')
++            ->where('char_bg.score', '>=', '0')
+             ->filter($filterType, $class, $querySearch)
+             ->paginate(15);
+ 
+diff --git a/app/Models/BgRank.php b/app/Models/BgRank.php
+index 71b69b3..750e6cf 100644
+--- a/app/Models/BgRank.php
++++ b/app/Models/BgRank.php
+@@ -8,7 +8,8 @@
+ class BgRank extends Model
+ {
+     use HasFactory;
+-    protected $table = 'rank_bg';
++    const TABLE_NAME = 'char_bg';
++    protected $table = self::TABLE_NAME;
+     protected $primaryKey = 'char_id';
+     public $timestamps  = false;
+ 
+@@ -19,24 +20,24 @@ public function scopeFilter($query, $filterType, $class, $querySearch)
+         $classes = explode(',', $class);
+         // dd($filterType);
+         $rankTypes = [
+-            "GW" => "rank_bg.win",
+-            "GT" => "rank_bg.tie",
+-            "GL" => "rank_bg.lost",
+-            "KC" => "rank_bg.kill_count",
+-            "DC" => "rank_bg.death_count",
+-            "DD" => "rank_bg.damage_done",
+-            "DR" => "rank_bg.damage_received",
+-            "GSS" => "rank_bg.support_skills_used",
+-            "WSS" => "rank_bg.wrong_support_skills_used",
+-            "TGH" => "rank_bg.healing_done",
+-            "TWH" => "rank_bg.wrong_healing_done",
+-            "HPP" => "rank_bg.hp_heal_potions",
+-            "SPP" => "rank_bg.sp_heal_potions",
+-            "YGU" => "rank_bg.yellow_gemstones",
+-            "RGU" => "rank_bg.red_gemstones",
+-            "BGU" => "rank_bg.blue_gemstones",
+-            "ACC" => "rank_bg.acid_demostration",
+-            "AU" => "rank_bg.ammo_used"
++            "GW" => self::TABLE_NAME.".win",
++            "GT" => self::TABLE_NAME.".tie",
++            "GL" => self::TABLE_NAME.".lost",
++            "KC" => self::TABLE_NAME.".kill_count",
++            "DC" => self::TABLE_NAME.".death_count",
++            "DD" => self::TABLE_NAME.".damage_done",
++            "DR" => self::TABLE_NAME.".damage_received",
++            "GSS" => self::TABLE_NAME.".support_skills_used",
++            "WSS" => self::TABLE_NAME.".wrong_support_skills_used",
++            "TGH" => self::TABLE_NAME.".healing_done",
++            "TWH" => self::TABLE_NAME.".wrong_healing_done",
++            "HPP" => self::TABLE_NAME.".hp_heal_potions",
++            "SPP" => self::TABLE_NAME.".sp_heal_potions",
++            "YGU" => self::TABLE_NAME.".yellow_gemstones",
++            "RGU" => self::TABLE_NAME.".red_gemstones",
++            "BGU" => self::TABLE_NAME.".blue_gemstones",
++            "ACC" => self::TABLE_NAME.".acid_demostration",
++            "AU" => self::TABLE_NAME.".ammo_used"
+         ];
+         $type = $rankTypes[$filterType] ?? null;
+         

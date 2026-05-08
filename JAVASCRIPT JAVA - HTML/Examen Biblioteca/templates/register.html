@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro</title>
+    <style>
+    body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        margin: 20px;
+        background-color: #f4f7fc;
+        padding: 50px;
+    }
+
+    h1 {
+        font-size: 36px;
+        color: #333;
+    }
+
+    h2 {
+        color: #555;
+    }
+
+    input {
+        margin: 10px;
+        padding: 10px 20px;
+        border-radius: 5px;
+        border: 1px solid #ddd;
+        width: 100%;
+        max-width: 300px;
+    }
+
+    button {
+        margin: 10px;
+        padding: 12px 25px;
+        font-size: 18px;
+        cursor: pointer;
+        background-color: #28a745;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+        background-color: #218838;
+    }
+
+    #status {
+        color: #d9534f;
+        margin-top: 10px;
+    }
+    h2 { color: #555; }
+        #login-btn {
+    display: none;
+    margin: 20px auto;
+    padding: 10px 20px;
+    font-size: 18px;
+    cursor: pointer;
+    display: block;
+}
+    </style>
+</head>
+
+
+</div>
+<body>
+
+
+    <p id="status"></p>
+<button id="registrarse-btn" style="display: none;" onclick="window.location.href='/registro'">Registrarse</button>
+
+    <h1>Bienvenido a la Biblioteca Digital</h1>
+    <h2>Registro</h2>
+    <input type="text" id="reg-usuario" placeholder="Usuario">
+    <input type="password" id="reg-password" placeholder="Contraseña">
+    <button onclick="registrar()">Registrarse</button>
+
+    <p id="status"></p>
+
+    <div style="text-align: center; margin-top: 20px;">
+        <button id="login-btn" style="display: none; padding: 10px 20px; font-size: 18px; cursor: pointer;">
+            Iniciar sesión aquí
+        </button>
+    </div>
+
+    <script>
+       async function registrar() {
+    const username = document.getElementById('reg-usuario').value;
+    const password = document.getElementById('reg-password').value;
+
+    const respuesta = await fetch('/registro', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, password })
+    });
+
+    const data = await respuesta.json();
+    document.getElementById('status').innerText = data.mensaje || data.error;
+
+    // Mostrar el botón en ambos casos: Registro exitoso o Usuario ya existe
+    if (data.mensaje === "Registro exitoso" || data.error === "El usuario ya existe") {
+        const loginBtn = document.getElementById('login-btn');
+        loginBtn.style.display = "block";  // Mostrar el botón de inicio de sesión
+        loginBtn.onclick = () => window.location.href = '/login';  // Redirigir a login
+    }
+}
+
+    </script>
+    
+    
+    
+
+</body>
+</html>

@@ -1,0 +1,12 @@
+2024-12-03 17:56:19  --------------------------------------------
+2024-12-03 17:56:19  Start server start-up procedure
+2024-12-03 17:56:20  Creating a virtual disk
+2024-12-03 17:56:20  Updating configuration MariaDB-10.4
+2024-12-03 17:56:20  Updating configuration of Sendmail
+2024-12-03 17:56:20  Updating configuration PHP_7.4
+2024-12-03 17:56:20  Updating configuration PHPMyAdmin
+2024-12-03 17:56:20  Updating configuration Apache_2.4-PHP_7.2-7.4
+2024-12-03 17:56:20  Launch MariaDB-10.4
+2024-12-03 17:56:20  Launch Apache_2.4-PHP_7.2-7.4
+2024-12-03 17:56:20  Checking server status
+2024-12-03 17:56:24  Server is successfully started in 4.547 seconds!

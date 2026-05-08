@@ -1,0 +1,40 @@
+2024-12-03 17:56:20 0 [Note] w:\modules\database\MariaDB-10.4\bin\mysqld.exe (mysqld 10.4.19-MariaDB-log) starting as process 12564 ...
+2024-12-03 17:56:20 0 [Note] InnoDB: Mutexes and rw_locks use Windows interlocked functions
+2024-12-03 17:56:20 0 [Note] InnoDB: Uses event mutexes
+2024-12-03 17:56:20 0 [Note] InnoDB: Compressed tables use zlib 1.2.11
+2024-12-03 17:56:20 0 [Note] InnoDB: Number of pools: 1
+2024-12-03 17:56:20 0 [Note] InnoDB: Using SSE2 crc32 instructions
+2024-12-03 17:56:20 0 [Note] InnoDB: Initializing buffer pool, total size = 128M, instances = 1, chunk size = 128M
+2024-12-03 17:56:20 0 [Note] InnoDB: Completed initialization of buffer pool
+2024-12-03 17:56:21 0 [Note] InnoDB: 128 out of 128 rollback segments are active.
+2024-12-03 17:56:21 0 [Note] InnoDB: Creating shared tablespace for temporary tables
+2024-12-03 17:56:21 0 [Note] InnoDB: Setting file 'w:\userdata\MariaDB-10.4\ibtmp1' size to 12 MB. Physically writing the file full; Please wait ...
+2024-12-03 17:56:21 0 [Note] InnoDB: File 'w:\userdata\MariaDB-10.4\ibtmp1' size is now 12 MB.
+2024-12-03 17:56:21 0 [Note] InnoDB: Waiting for purge to start
+2024-12-03 17:56:21 0 [Note] InnoDB: 10.4.19 started; log sequence number 630857; transaction id 742
+2024-12-03 17:56:21 0 [Note] InnoDB: Loading buffer pool(s) from w:\userdata\MariaDB-10.4\ib_buffer_pool
+2024-12-03 17:56:21 0 [Note] Plugin 'FEEDBACK' is disabled.
+2024-12-03 17:56:21 0 [Note] Server socket created on IP: '127.0.0.1'.
+2024-12-03 17:56:21 0 [Note] InnoDB: Buffer pool(s) load completed at 241203 17:56:21
+2024-12-03 17:56:22 0 [Note] Reading of all Master_info entries succeeded
+2024-12-03 17:56:22 0 [Note] Added new Master_info '' to hash table
+2024-12-03 17:56:22 0 [Note] w:\modules\database\MariaDB-10.4\bin\mysqld.exe: ready for connections.
+Version: '10.4.19-MariaDB-log'  socket: ''  port: 3306  mariadb.org binary distribution
+2024-12-04 12:09:10 57 [Warning] Aborted connection 57 to db: 'rov' user: 'rov_server' host: 'localhost' (Got an error reading communication packets)
+2024-12-04 12:09:10 59 [Warning] Aborted connection 59 to db: 'rov' user: 'rov_server' host: 'localhost' (Got an error reading communication packets)
+2024-12-04 12:09:10 54 [Warning] Aborted connection 54 to db: 'rov' user: 'rov_server' host: 'localhost' (Got an error reading communication packets)
+2024-12-04 12:09:11 52 [Warning] Aborted connection 52 to db: 'rov' user: 'rov_server' host: 'localhost' (Got an error reading communication packets)
+2024-12-04 12:09:11 55 [Warning] Aborted connection 55 to db: 'rov' user: 'rov_server' host: 'localhost' (Got an error reading communication packets)
+2024-12-04 12:09:11 58 [Warning] Aborted connection 58 to db: 'rov' user: 'rov_server' host: 'localhost' (Got an error reading communication packets)
+2024-12-04 12:09:11 51 [Warning] Aborted connection 51 to db: 'rov' user: 'rov_server' host: 'localhost' (Got an error reading communication packets)
+2024-12-04 12:09:12 53 [Warning] Aborted connection 53 to db: 'rov' user: 'rov_server' host: 'localhost' (Got an error reading communication packets)
+2024-12-04 12:09:12 56 [Warning] Aborted connection 56 to db: 'rov' user: 'rov_server' host: 'localhost' (Got an error reading communication packets)
+2024-12-04 12:22:01 66 [Warning] Aborted connection 66 to db: 'rov' user: 'rov_server' host: 'localhost' (Got an error reading communication packets)
+2024-12-04 12:22:01 68 [Warning] Aborted connection 68 to db: 'rov' user: 'rov_server' host: 'localhost' (Got an error reading communication packets)
+2024-12-04 12:22:01 63 [Warning] Aborted connection 63 to db: 'rov' user: 'rov_server' host: 'localhost' (Got an error reading communication packets)
+2024-12-04 12:22:01 65 [Warning] Aborted connection 65 to db: 'rov' user: 'rov_server' host: 'localhost' (Got an error reading communication packets)
+2024-12-04 12:22:01 62 [Warning] Aborted connection 62 to db: 'rov' user: 'rov_server' host: 'localhost' (Got an error reading communication packets)
+2024-12-04 12:22:01 67 [Warning] Aborted connection 67 to db: 'rov' user: 'rov_server' host: 'localhost' (Got an error reading communication packets)
+2024-12-04 12:22:02 61 [Warning] Aborted connection 61 to db: 'rov' user: 'rov_server' host: 'localhost' (Got an error reading communication packets)
+2024-12-04 12:22:02 60 [Warning] Aborted connection 60 to db: 'rov' user: 'rov_server' host: 'localhost' (Got an error reading communication packets)
+2024-12-04 12:22:02 64 [Warning] Aborted connection 64 to db: 'rov' user: 'rov_server' host: 'localhost' (Got an error reading communication packets)

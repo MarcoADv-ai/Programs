@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biblioteca Digital</title>
+    <style>
+    body { font-family: Arial, sans-serif; text-align: center; margin: 20px; background-color: #f4f7fc; }
+    table { width: 70%; margin: 20px auto; border-collapse: collapse; background-color: #fff; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+    th, td { padding: 12px; text-align: center; border: 1px solid #ddd; }
+    th { background-color: #28a745; color: white; }
+    tr:nth-child(even) { background-color: #f9f9f9; }
+    button { margin: 10px; padding: 12px 25px; font-size: 18px; cursor: pointer; background-color: #007BFF; color: white; border: none; border-radius: 5px; transition: background-color 0.3s ease; }
+    button:hover { background-color: #0056b3; }
+    </style>
+</head>
+<body>
+    <p id="status"></p>
+    <button onclick="cerrarSesion()">Cerrar Sesión</button>
+    <!-- Botón de Prestamos -->
+    <button onclick="irAPrestamos()">Prestamos</button> <!-- Nuevo botón de Préstamos -->
+
+    <h1>Biblioteca Digital</h1>
+
+    <h2>Agregar Libro</h2>
+    <input type="text" id="titulo" placeholder="Título">
+    <input type="text" id="autor" placeholder="Autor">
+    <input type="number" id="anio" placeholder="Año">
+    <input type="number" id="cantidad" placeholder="Cantidad">
+    <button onclick="agregarLibro()">Agregar</button>
+
+    <h2>Lista de Libros</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Título</th>
+                <th>Autor</th>
+                <th>Año</th>
+                <th>Cantidad</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody id="tablaLibros"></tbody>
+    </table>
+    <div id="formularioEditar" style="display: none;">
+        <h3>Editar Libro</h3>
+        <input type="text" id="editarTitulo" placeholder="Nuevo título">
+        <input type="text" id="editarAutor" placeholder="Nuevo autor">
+        <input type="number" id="editarAnio" placeholder="Nuevo año">
+        <input type="number" id="editarCantidad" placeholder="Nueva cantidad">
+        <button onclick="guardarEdicion()">Guardar Cambios</button>
+        <button onclick="cerrarFormularioEditar()">Cancelar</button>
+    </div>
+
+    <script>
+        function irAPrestamos() {
+    window.location.href = "/prestamos";  // Redirige al frontend para ver la tabla de préstamos
+}
+        async function agregarLibro() {
+            const titulo = document.getElementById('titulo').value;
+            const autor = document.getElementById('autor').value;
+            const anio = document.getElementById('anio').value;
+            const cantidad = document.getElementById('cantidad').value;
+
+            if (!cantidad || cantidad <= 0) {
+                document.getElementById('status').innerText = "Por favor ingresa una cantidad válida.";
+                return;
+            }
+
+            const respuesta = await fetch('/agregar', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ titulo, autor, anio, cantidad })
+            });
+
+            const data = await respuesta.json();
+            document.getElementById('status').innerText = data.mensaje;
+            obtenerLibros();
+        }
+
+
+        async function actualizarStock() {
+    const respuesta = await fetch('/libros');
+    const libros = await respuesta.json();
+    const tablaLibros = document.getElementById('tablaLibros');
+    tablaLibros.innerHTML = '';  // Limpiamos la tabla
+
+    libros.forEach(libro => {
+        const fila = document.createElement('tr');
+        fila.innerHTML = `
+            <td>${libro.id}</td>
+            <td>${libro.titulo}</td>
+            <td>${libro.autor}</td>
+            <td>${libro.anio}</td>
+            <td>${libro.cantidad}</td>
+            <td>
+                <button onclick="editarLibro(${libro.id})">Editar</button>
+                <button onclick="eliminarLibro(${libro.id})">Eliminar</button>
+                <button onclick="abrirFormularioPrestamo(${libro.id})">Prestamo</button>
+            </td>
+        `;
+        tablaLibros.appendChild(fila);
+    });
+}
+function editarLibro(id) {
+    // Mostrar el formulario de edición
+    document.getElementById("formularioEditar").style.display = "block";
+    
+    // Obtener los datos del libro
+    fetch(`/libros/${id}`)
+        .then(response => response.json())
+        .then(libro => {
+            // Rellenar el formulario con los datos del libro
+            document.getElementById("editarTitulo").value = libro.titulo;
+            document.getElementById("editarAutor").value = libro.autor;
+            document.getElementById("editarAnio").value = libro.anio;
+            document.getElementById("editarCantidad").value = libro.cantidad;
+            
+            // Almacenar el id del libro para poder actualizarlo
+            window.editarLibroId = id;
+        });
+}
+
+function cerrarFormularioEditar() {
+    // Ocultar el formulario
+    document.getElementById("formularioEditar").style.display = "none";
+}
+
+function guardarEdicion() {
+    const id = window.editarLibroId;  // Obtener el id del libro que estamos editando
+    
+    // Obtener los nuevos datos del formulario
+    const nuevoTitulo = document.getElementById("editarTitulo").value;
+    const nuevoAutor = document.getElementById("editarAutor").value;
+    const nuevoAnio = document.getElementById("editarAnio").value;
+    const nuevaCantidad = document.getElementById("editarCantidad").value;
+    
+    // Validación sencilla
+    if (!nuevoTitulo || !nuevoAutor || !nuevoAnio || !nuevaCantidad) {
+        alert("Por favor complete todos los campos.");
+        return;
+    }
+    
+    // Enviar los datos al backend para actualizar el libro
+    fetch(`/actualizar/${id}`, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            titulo: nuevoTitulo,
+            autor: nuevoAutor,
+            anio: nuevoAnio,
+            cantidad: nuevaCantidad
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        alert(data.mensaje);
+        if (!data.error) {
+            // Recargar la lista de libros después de editar
+            obtenerLibros();
+            cerrarFormularioEditar();  // Cerrar el formulario
+        }
+    })
+    .catch(error => {
+        console.error("Error al guardar la edición", error);
+    });
+}
+
+
+actualizarStock();  // Llama a la función para recargar los libros
+
+
+        async function obtenerLibros() {
+            const respuesta = await fetch('/libros');
+            const libros = await respuesta.json();
+            const tablaLibros = document.getElementById('tablaLibros');
+            tablaLibros.innerHTML = '';
+
+            libros.forEach(libro => {
+                const fila = document.createElement('tr');
+                fila.innerHTML = `
+                    <td>${libro.id}</td>
+                    <td>${libro.titulo}</td>
+                    <td>${libro.autor}</td>
+                    <td>${libro.anio}</td>
+                    <td>${libro.cantidad}</td>
+                    <td>
+                        <button onclick="editarLibro(${libro.id})">Editar</button>
+                        <button onclick="eliminarLibro(${libro.id})">Eliminar</button>
+                        <button onclick="abrirFormularioPrestamo(${libro.id})">Prestamo</button>
+                    </td>
+                `;
+                tablaLibros.appendChild(fila);
+            });
+        }
+
+        async function abrirFormularioPrestamo(libroId) {
+            const libro = await obtenerLibroPorId(libroId);
+            const formulario = document.createElement('form');
+            formulario.innerHTML = `
+                <h2>Formulario de Préstamo</h2>
+                <label for="nombre">Nombre:</label>
+                <input type="text" id="nombre" required><br>
+                
+                <label for="sexo">Sexo:</label>
+                <select id="sexo" required>
+                    <option value="Masculino">Masculino</option>
+                    <option value="Femenino">Femenino</option>
+                </select><br>
+                
+                <button type="button" onclick="procesarPrestamo(${libroId})">Confirmar Préstamo</button>
+                <button type="button" onclick="cerrarFormulario()">Cancelar</button>
+            `;
+            document.body.appendChild(formulario);
+        }
+
+        async function obtenerLibroPorId(libroId) {
+            const respuesta = await fetch(`/libros/${libroId}`);
+            const libro = await respuesta.json();
+            return libro;
+        }
+
+        async function procesarPrestamo(libroId) {
+    const nombre = document.getElementById('nombre').value;
+    const sexo = document.getElementById('sexo').value;
+
+    if (!nombre || !sexo) {
+        alert("Por favor, completa todos los campos.");
+        return;
+    }
+
+    const data = {
+        libroId: libroId,
+        nombre: nombre,
+        sexo: sexo
+    };
+
+    const respuesta = await fetch('/procesar_prestamo', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+    });
+
+    const resultado = await respuesta.json();
+    alert(resultado.mensaje);
+    cerrarFormulario();  // Cerrar el formulario después de procesar el préstamo
+
+    // Redirigir a la página de prestamos después de procesar el préstamo
+    setTimeout(() => {
+        window.location.href = "/prestamos";  // Redirigir después de un breve retraso
+    }, 500); // 500 ms de retraso
+}
+
+
+
+        async function cerrarFormulario() {
+            const formulario = document.querySelector('form');
+            if (formulario) {
+                formulario.remove();
+            }
+        }
+
+        async function eliminarLibro(id) {
+            const respuesta = await fetch(`/eliminar/${id}`, {
+                method: 'DELETE'
+            });
+
+            const data = await respuesta.json();
+            document.getElementById('status').innerText = data.mensaje;
+            obtenerLibros();
+        }
+
+        async function cerrarSesion() {
+            await fetch('/logout');
+            window.location.href = "/";
+        }
+
+        // Redirigir a la página de préstamos
+        function irAPrestamos() {
+            window.location.href = "/prestamos";
+        }
+
+        obtenerLibros();  // Cargar los libros al iniciar la página
+    </script>
+</body>
+</html>

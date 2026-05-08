@@ -1,0 +1,45 @@
+# HTTP to HTTPS redirection
+server {
+    listen 80;
+    server_name <your_domain>; # Replace <your_domain> with your domain, e.g., 193.251.82.212 xpanel.com www.xpanel.com
+    return 301 https://$host$request_uri;
+}
+
+# HTTPS server configuration
+server {
+    listen 443 ssl http2;
+    server_name <your_domain>; # Replace <your_domain> with your domain, e.g., xpanel.com www.xpanel.com
+
+    # SSL certificate paths
+    ssl_certificate /path/to/your/cert.pem; # Replace with the path to your cert.pem file
+    ssl_certificate_key /path/to/your/key.pem; # Replace with the path to your key.pem file
+
+    # SSL protocols and ciphers
+    ssl_protocols TLSv1.2 TLSv1.3;
+    ssl_ciphers 'TLS_AES_128_GCM_SHA256:TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-GCM-SHA384';
+
+    # Site root directory
+    root /path/to/your/site/public; # Replace with the path to your public directory
+
+    # Index files
+    index index.php index.html index.htm;
+
+    # Root location configuration
+    location / {
+        try_files $uri $uri/ /index.php?$query_string;
+    }
+
+    # Configuration to handle PHP files
+    location ~ \.php$ {
+        proxy_cache off;
+        include snippets/fastcgi-php.conf;
+        fastcgi_pass unix:/var/run/php/php8.3-fpm.sock; # Make sure this path matches your PHP-FPM version
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        include fastcgi_params;
+    }
+
+    # Deny access to hidden files like .htaccess
+    location ~ /\.ht {
+        deny all;
+    }
+}
