@@ -1,0 +1,8 @@
+PASOS A SEGUIR PARA NO OLVIDAR MARKITOS
+-Transformar el programa que quieras a EXE
+-Protegerlo con VMProtect
+-Cambiarle al nombre con la terminacion que quiera (Ya sea DLL o DAT)
+-Agregarlo en la validacion de licencia
+-Hacer .exe el Validate License
+-Protegerlo con VMProtect el Validador
+-Listo Tengo Metodo de licencia en mis programas.
