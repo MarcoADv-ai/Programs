@@ -1,0 +1,111 @@
+╔═══════════════════════════════════════════════════════════╗
+║     INSTALACIÓN RÁPIDA - MVP TRACKER RAVENMOOR            ║
+║              Solo subir archivos y listo!                 ║
+╚═══════════════════════════════════════════════════════════╝
+
+📁 ARCHIVOS A SUBIR A TU HOSTING:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+1. index_php.html  →  RENOMBRAR a "index.html"
+2. proxy.php
+3. .htaccess
+4. mvps_data.json
+5. mvps_history.json
+
+📋 REQUISITOS DEL HOSTING:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✓ PHP 7.0 o superior
+✓ cURL habilitado
+✓ Permisos de escritura
+
+🚀 PASOS (VIA FTP o cPanel):
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+OPCIÓN A - FileZilla/FTP:
+──────────────────────────────────────────────────────────────
+1. Conecta a tu FTP (ftp.tudominio.com)
+2. Ve a la carpeta: public_html/ o www/
+3. Sube estos archivos:
+   - index_php.html
+   - proxy.php  
+   - .htaccess
+   - mvps_data.json
+   - mvps_history.json
+4. Renombra "index_php.html" a "index.html"
+5. Establece permisos a archivos JSON: 666 o 777
+   - mvps_data.json → 666 o 777
+   - mvps_history.json → 666 o 777
+6. ¡Abre https://tudominio.com !
+
+OPCIÓN B - cPanel:
+──────────────────────────────────────────────────────────────
+1. Accede a cPanel de tu hosting
+2. Abre "Administrador de Archivos"
+3. Ve a: public_html/ o www/
+4. Clic en "Cargar" y sube:
+   - index_php.html
+   - proxy.php
+   - .htaccess
+   - mvps_data.json
+   - mvps_history.json
+5. Renombra "index_php.html" a "index.html"
+   (Clic derecho → Renombrar)
+6. Establece permisos a los archivos JSON:
+   - Clic derecho en mvps_data.json → Permisos → 666 o 777
+   - Clic derecho en mvps_history.json → Permisos → 666 o 777
+7. ¡Abre https://tudominio.com !
+
+🔐 PERMISOS CORRECTOS:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Carpeta raíz:       755
+index.html:         644
+proxy.php:          644
+.htaccess:          644
+mvps_data.json:     666 o 777  ← ¡IMPORTANTE!
+mvps_history.json:  666 o 777  ← ¡IMPORTANTE!
+
+✅ VERIFICACIÓN:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+1. Abre: https://tudominio.com/proxy.php?action=all
+   → Debes ver datos JSON de MVPs
+
+2. Abre: https://tudominio.com
+   → Debes ver la página del tracker
+
+⚠️ SOLUCIÓN DE PROBLEMAS:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Error 500:
+→ Tu hosting debe tener PHP y cURL habilitados
+→ Verifica permisos de archivos
+
+No detecta MVPs:
+→ mvps_data.json y mvps_history.json deben tener permisos 666 o 777
+→ Asegúrate que ambos archivos tengan contenido: []
+
+Error 404:
+→ Asegúrate que renombraste index_php.html a index.html
+→ Verifica que .htaccess esté subido
+
+🎯 ESTRUCTURA FINAL EN TU HOSTING:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+public_html/
+├── index.html         (renombrado de index_php.html)
+├── proxy.php
+├── .htaccess
+├── mvps_data.json     (permisos 666/777)
+└── mvps_history.json  (permisos 666/777)
+
+📊 HOSTINGS COMPATIBLES (Probados):
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✓ Hostinger
+✓ SiteGround
+✓ HostGator
+✓ Bluehost
+✓ 000webhost (GRATIS)
+
+🎮 ¡LISTO! Abre https://tudominio.com y comienza a trackear MVPs!
+
+═══════════════════════════════════════════════════════════════
+Actualización automática cada 5 segundos | Sin recarga manual
+═══════════════════════════════════════════════════════════════
+

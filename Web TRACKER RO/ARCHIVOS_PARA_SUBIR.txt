@@ -1,0 +1,28 @@
+╔═══════════════════════════════════════════════════════════════╗
+║          ARCHIVOS PARA SUBIR A TU HOSTING WEB                 ║
+╚═══════════════════════════════════════════════════════════════╝
+
+📦 SUBE ESTOS 5 ARCHIVOS A TU HOSTING:
+
+1. ✅ index_php.html  →  RENOMBRAR a "index.html" después de subirlo
+2. ✅ proxy.php
+3. ✅ .htaccess
+4. ✅ mvps_data.json  →  Establecer permisos 666 o 777
+5. ✅ mvps_history.json  →  Establecer permisos 666 o 777
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🎯 RESUMEN:
+• Sube los 5 archivos a: public_html/ o www/
+• Renombra index_php.html → index.html
+• Da permisos de escritura a ambos JSON (666/777):
+  - mvps_data.json
+  - mvps_history.json
+• Abre: https://tudominio.com
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📖 GUÍA COMPLETA: Ver INSTALACION_RAPIDA.txt o HOSTING_GUIDE.md
+
+¡Eso es todo! 🚀
+
