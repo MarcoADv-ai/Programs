@@ -1,0 +1,5 @@
+-Agregarle las configuraciones de Keyauth
+-Usar IDChecker.exe para mostrar el HWID de la persona
+-Agregar el HWID de la persona que se vaya a mandar el .exe
+-Compilar y compilar con VMProtect
+-Subir Usuario y Contraseña a keyauth
