@@ -1,0 +1,269 @@
+{
+  "Beelzebub": {
+    "maps": ["abbey03"],
+    "respawn_min_minutes": 720,
+    "respawn_max_minutes": 730
+  },
+  "Ifrit": {
+    "maps": ["thor_v03"],
+    "respawn_min_minutes": 660,
+    "respawn_max_minutes": 670
+  },
+  "Valkyrie Randgris": {
+    "maps": ["odin_tem03"],
+    "respawn_min_minutes": 480,
+    "respawn_max_minutes": 490
+  },
+  "Wounded Morroc": {
+    "maps": ["moc_fild22"],
+    "respawn_min_minutes": 720,
+    "respawn_max_minutes": 780
+  },
+  "High Priest Margaretha": {
+    "maps": ["lhz_dun03"],
+    "respawn_min_minutes": 100,
+    "respawn_max_minutes": 130,
+    "shared_spawn_group": "lhz_dun03_bio3"
+  },
+  "High Wizard Kathryne": {
+    "maps": ["lhz_dun03"],
+    "respawn_min_minutes": 100,
+    "respawn_max_minutes": 130,
+    "shared_spawn_group": "lhz_dun03_bio3"
+  },
+  "Assassin Cross Eremes": {
+    "maps": ["lhz_dun03"],
+    "respawn_min_minutes": 100,
+    "respawn_max_minutes": 130,
+    "shared_spawn_group": "lhz_dun03_bio3"
+  },
+  "Sniper Cecil": {
+    "maps": ["lhz_dun03"],
+    "respawn_min_minutes": 100,
+    "respawn_max_minutes": 130,
+    "shared_spawn_group": "lhz_dun03_bio3"
+  },
+  "Lord Knight Seyren": {
+    "maps": ["lhz_dun03"],
+    "respawn_min_minutes": 100,
+    "respawn_max_minutes": 130,
+    "shared_spawn_group": "lhz_dun03_bio3"
+  },
+  "Whitesmith Howard": {
+    "maps": ["lhz_dun03"],
+    "respawn_min_minutes": 100,
+    "respawn_max_minutes": 130,
+    "shared_spawn_group": "lhz_dun03_bio3"
+  },
+  "Nidhoggr's Shadow": {
+    "maps": ["2@nyd"],
+    "respawn_min_minutes": 720,
+    "respawn_max_minutes": 720
+  },
+  "Detardeurus": {
+    "maps": ["abyss_03"],
+    "respawn_min_minutes": 180,
+    "respawn_max_minutes": 190
+  },
+  "Atroce": {
+    "maps": ["ra_fild02", "ra_fild03", "ra_fild04", "ve_fild01", "ve_fild02"],
+    "respawn_min_minutes": 180,
+    "respawn_max_minutes": 370,
+    "respawn_per_map": {
+      "ra_fild02": [240, 250],
+      "ra_fild03": [180, 190],
+      "ra_fild04": [300, 310],
+      "ve_fild01": [180, 190],
+      "ve_fild02": [360, 370]
+    }
+  },
+  "RSX-0806": {
+    "maps": ["ein_dun02"],
+    "respawn_min_minutes": 125,
+    "respawn_max_minutes": 135
+  },
+  "Stormy Knight": {
+    "maps": ["xmas_dun02"],
+    "respawn_min_minutes": 60,
+    "respawn_max_minutes": 70
+  },
+  "Orc Lord": {
+    "maps": ["gef_fild10"],
+    "respawn_min_minutes": 120,
+    "respawn_max_minutes": 130
+  },
+  "Orc Hero": {
+    "maps": ["gef_fild14", "gef_fild10"],
+    "respawn_min_minutes": 60,
+    "respawn_max_minutes": 1450,
+    "respawn_per_map": {
+      "gef_fild14": [60, 70],
+      "gef_fild10": [1440, 1450]
+    }
+  },
+  "Phreeoni": {
+    "maps": ["moc_fild17"],
+    "respawn_min_minutes": 120,
+    "respawn_max_minutes": 130
+  },
+  "Maya": {
+    "maps": ["anthell02"],
+    "respawn_min_minutes": 120,
+    "respawn_max_minutes": 130
+  },
+  "Moonlight Flower": {
+    "maps": ["pay_dun04"],
+    "respawn_min_minutes": 60,
+    "respawn_max_minutes": 70
+  },
+  "Egnigem Cenia": {
+    "maps": ["lhz_dun02"],
+    "respawn_min_minutes": 120,
+    "respawn_max_minutes": 130
+  },
+  "Evil Snake Lord": {
+    "maps": ["gon_dun03"],
+    "respawn_min_minutes": 94,
+    "respawn_max_minutes": 104
+  },
+  "Gopinich": {
+    "maps": ["mosk_dun03"],
+    "respawn_min_minutes": 120,
+    "respawn_max_minutes": 130
+  },
+  "Lord of the Dead": {
+    "maps": ["niflheim"],
+    "respawn_min_minutes": 133,
+    "respawn_max_minutes": 133
+  },
+  "Hatii": {
+    "maps": ["xmas_fild01"],
+    "respawn_min_minutes": 120,
+    "respawn_max_minutes": 130
+  },
+  "Dark Lord": {
+    "maps": ["gl_chyard"],
+    "respawn_min_minutes": 60,
+    "respawn_max_minutes": 70
+  },
+  "Dracula": {
+    "maps": ["gef_dun01"],
+    "respawn_min_minutes": 60,
+    "respawn_max_minutes": 70
+  },
+  "Doppelganger": {
+    "maps": ["gef_dun02"],
+    "respawn_min_minutes": 120,
+    "respawn_max_minutes": 130
+  },
+  "Mistress": {
+    "maps": ["mjolnir_04"],
+    "respawn_min_minutes": 120,
+    "respawn_max_minutes": 130
+  },
+  "Golden Thief Bug": {
+    "maps": ["prt_sewb4"],
+    "respawn_min_minutes": 60,
+    "respawn_max_minutes": 70
+  },
+  "Pharaoh": {
+    "maps": ["in_sphinx5"],
+    "respawn_min_minutes": 60,
+    "respawn_max_minutes": 70
+  },
+  "Amon Ra": {
+    "maps": ["moc_pryd06"],
+    "respawn_min_minutes": 60,
+    "respawn_max_minutes": 70
+  },
+  "Baphomet": {
+    "maps": ["prt_maze03"],
+    "respawn_min_minutes": 120,
+    "respawn_max_minutes": 130
+  },
+  "Turtle General": {
+    "maps": ["tur_dun04"],
+    "respawn_min_minutes": 60,
+    "respawn_max_minutes": 70
+  },
+  "Drake": {
+    "maps": ["treasure02"],
+    "respawn_min_minutes": 120,
+    "respawn_max_minutes": 130
+  },
+  "Fallen Bishop Hibram": {
+    "maps": ["abbey02"],
+    "respawn_min_minutes": 120,
+    "respawn_max_minutes": 130
+  },
+  "Thanatos": {
+    "maps": ["thana_t12"],
+    "respawn_min_minutes": 720,
+    "respawn_max_minutes": 720
+  },
+  "Gloom Under Night": {
+    "maps": ["ra_san05"],
+    "respawn_min_minutes": 300,
+    "respawn_max_minutes": 310
+  },
+  "Boitata": {
+    "maps": ["bra_dun02"],
+    "respawn_min_minutes": 120,
+    "respawn_max_minutes": 130
+  },
+  "Eddga": {
+    "maps": ["pay_fild11"],
+    "respawn_min_minutes": 120,
+    "respawn_max_minutes": 130
+  },
+  "Kiel D-01": {
+    "maps": ["kh_dun02"],
+    "respawn_min_minutes": 120,
+    "respawn_max_minutes": 180
+  },
+  "Incantation Samurai": {
+    "maps": ["ama_dun03"],
+    "respawn_min_minutes": 91,
+    "respawn_max_minutes": 101
+  },
+  "Samurai Specter": {
+    "maps": ["ama_dun03"],
+    "respawn_min_minutes": 91,
+    "respawn_max_minutes": 101
+  },
+  "Osiris": {
+    "maps": ["moc_pryd04"],
+    "respawn_min_minutes": 60,
+    "respawn_max_minutes": 70
+  },
+  "Lady Tanee": {
+    "maps": ["ayo_dun02"],
+    "respawn_min_minutes": 420,
+    "respawn_max_minutes": 430
+  },
+  "Bacsojin": {
+    "maps": ["lou_dun03"],
+    "respawn_min_minutes": 117,
+    "respawn_max_minutes": 127
+  },
+  "White Lady": {
+    "maps": ["lou_dun03"],
+    "respawn_min_minutes": 117,
+    "respawn_max_minutes": 127
+  },
+  "Iara": {
+    "maps": ["iz_dun05"],
+    "respawn_min_minutes": 120,
+    "respawn_max_minutes": 150
+  },
+  "Vesper": {
+    "maps": ["jupe_core"],
+    "respawn_min_minutes": 120,
+    "respawn_max_minutes": 130
+  },
+  "Tao Gunka": {
+    "maps": ["beach_dun"],
+    "respawn_min_minutes": 300,
+    "respawn_max_minutes": 310
+  }
+}
