@@ -1,0 +1,16 @@
+[Unit]
+Description=Sakura RO testeo1 con Bright Data
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+User=www-data
+Group=www-data
+WorkingDirectory=/var/www/sakura-testeo1
+EnvironmentFile=/etc/sakura-testeo1.env
+ExecStart=/var/www/sakura-testeo1/venv/bin/gunicorn --workers 1 --bind 127.0.0.1:8001 --timeout 360 app:app
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
