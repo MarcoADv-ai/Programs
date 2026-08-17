@@ -1,136 +1,113 @@
-# Bratva MVP Tracker - Testeo 1 con Bright Data
+# Bratva MVP Tracker V2.0
 
-Aplicación web para consultar, administrar y monitorear MVP del servidor Sakura RO. Esta variante obtiene las muertes publicadas en el ranking mediante Bright Data, registra el historial en SQLite y genera cuentas regresivas según el MVP y el mapa detectados.
+Tracker web para controlar los tiempos de aparición de los MVP en Sakura RO.
 
-El proyecto pertenece al dominio **Catálogo de contenido** y cumple un flujo CRUD completo sobre la entidad principal **MVP**.
+La versión publicada se puede consultar aquí: [http://161.153.198.115/testeo1/](http://161.153.198.115/testeo1/)
 
-## 1. Descripción del proyecto
+## ¿Por qué hice este proyecto?
 
-Bratva MVP Tracker evita calcular manualmente los tiempos de reaparición. La aplicación combina:
+El proyecto nació porque dentro del juego llevábamos los tiempos de los MVP manualmente. Después de varias muertes era fácil perder el orden, calcular mal el respawn o no saber cuál aparecería primero.
 
-- Tracker público con timers, prioridades, historial, búsqueda y filtros.
-- Catálogo administrativo para gestionar MVP, mapas, respawns y GIF personalizados.
-- Monitor automático del ranking público a través de Bright Data.
-- Persistencia relacional mediante SQLite.
+La primera versión solamente mostraba timers. Con el tiempo fui agregando el historial, las prioridades de la guild, los resets individuales y el cálculo especial de Convex Mirror. Más adelante reemplacé los archivos JSON por SQLite y añadí un catálogo administrativo para no tener que modificar el código cada vez que quisiera registrar o corregir un MVP.
 
-La instalación de prueba está preparada para ejecutarse bajo la ruta `/testeo1/`.
+Esta variante utiliza Bright Data para consultar el ranking público de Sakura RO. Cuando encuentra una muerte nueva, el backend revisa el nombre y el mapa, guarda el evento y genera el timer correspondiente.
 
-### Aplicación publicada
+Para los lineamientos escolares, el proyecto entra en el dominio de **Catálogo de contenido**.
 
-- [http://161.153.198.115/testeo1/](http://161.153.198.115/testeo1/)
+## Entidad principal
 
-## 2. Entidad principal
+La entidad principal es el **MVP**. Cada MVP tiene un nombre, un tiempo mínimo y máximo de respawn, uno o varios mapas y, de forma opcional, un grupo compartido y un GIF personalizado.
 
-La entidad principal es el **MVP**. Cada registro contiene:
+Separé los mapas en otra tabla porque un mismo MVP puede aparecer en más de un lugar y cada mapa puede necesitar tiempos distintos.
 
-- Identificador único.
-- Nombre utilizado por el ranking.
-- Respawn mínimo y máximo.
-- Grupo de aparición compartida opcional.
-- GIF personalizado opcional.
-- Uno o varios mapas asociados.
+Las tablas principales son:
 
-Un mapa puede utilizar el respawn base o definir un intervalo particular.
-
-### Modelo relacional
-
-| Tabla | Propósito |
+| Tabla | Información que guarda |
 |---|---|
-| `mvp_definitions` | Catálogo de MVP, respawns base y GIF almacenados como BLOB. |
-| `mvp_maps` | Mapas relacionados y posibles respawns específicos. |
-| `kill_events` | Historial persistente de muertes detectadas. |
-| `last_check_events` | Eventos de la última consulta usados para evitar duplicados. |
-| `active_timers` | Cuentas regresivas activas. |
+| `mvp_definitions` | Datos generales de cada MVP y su GIF. |
+| `mvp_maps` | Mapas asociados y tiempos especiales de respawn. |
+| `kill_events` | Muertes detectadas en el ranking. |
+| `last_check_events` | Última consulta procesada para evitar duplicados. |
+| `active_timers` | Timers que se encuentran activos. |
 
-Relación principal:
+La relación más importante es:
 
 ```text
 mvp_definitions (1) -------- (N) mvp_maps
 ```
 
-## 3. Funcionalidades CRUD
+## Funcionalidades y CRUD
+
+El tracker se puede consultar sin iniciar sesión. Cualquier visitante puede ver timers, historial, prioridades y utilizar los controles públicos. El inicio de sesión solamente habilita la administración del catálogo.
 
 ### Crear
 
-El administrador puede registrar un MVP con nombre, respawn, grupo opcional, uno o varios mapas y un GIF de hasta 5 MB.
+Desde **Catálogo de MVP** puedo registrar un nuevo MVP indicando su nombre, respawn, mapas y un GIF opcional. El registro aparece en el catálogo aunque todavía no exista un timer para él.
 
 ### Consultar
 
-La aplicación permite consultar el catálogo completo, buscar por MVP o mapa, revisar timers activos, prioridades e historial. El tracker es público; el catálogo administrativo requiere iniciar sesión.
+El catálogo muestra todos los MVP guardados en SQLite. Se puede buscar por nombre o mapa. En la vista pública se muestran los timers activos, el historial de muertes y la lista de prioridad ordenada por próxima aparición.
 
-### Actualizar
+### Editar
 
-El administrador puede modificar el nombre, respawn, grupo, GIF, mapas asociados y tiempos particulares por mapa. Los cambios persisten en SQLite.
+Puedo cambiar el nombre, los tiempos, el grupo compartido, el GIF o los mapas asociados. Esto me permitió corregir casos como `Memory of Thanatos`, `Nidhoggr's Shadow` y mapas cuyos nombres no coincidían exactamente con el ranking.
 
 ### Eliminar
 
-El administrador puede eliminar un MVP después de confirmar la acción. Se eliminan su configuración, mapas y timers activos relacionados; el historial conserva la información textual de eventos anteriores.
+La eliminación pide confirmación antes de borrar. Al eliminar un MVP también se quitan sus mapas y timers activos, pero se conserva el texto de las muertes antiguas dentro del historial.
 
-### Funciones adicionales
+Además del CRUD, el proyecto incluye:
 
-- Consulta del ranking mediante Bright Data.
-- Normalización de nombres como `Memory of Thanatos` y `Nidhoggr's Shadow`.
-- Generación automática y ordenamiento de timers.
-- Lista de prioridad de la guild.
-- Reset general e individual de timers.
-- Delay exacto por Convex Mirror para Wounded Morroc y Valkyrie Randgris.
-- Sesión administrativa y protección CSRF para el CRUD.
+- Generación automática de timers desde el ranking.
+- Reset general y reset individual por MVP.
+- Prioridades de la guild ordenadas por tiempo.
+- Delay exacto de Convex Mirror para Wounded Morroc y Valkyrie Randgris.
+- GIF personalizados guardados dentro de SQLite.
+- Sesión administrativa y protección CSRF.
 
-## 4. Reglas de negocio
+## Reglas de negocio
 
-1. El nombre de cada MVP debe ser único.
-2. Cada MVP debe tener al menos un mapa asociado.
-3. Un MVP no puede repetir el mismo mapa.
-4. El respawn máximo debe ser igual o mayor al mínimo.
-5. Los tiempos de respawn no pueden ser negativos.
-6. Solo se aceptan archivos GIF válidos de hasta 5 MB.
-7. Solo una sesión administrativa puede modificar el catálogo.
-8. Solo se genera un timer cuando nombre y mapa coinciden con la configuración.
-9. El delay exacto solo admite valores dentro del intervalo permitido.
-10. Reiniciar timers no elimina el historial de muertes.
+Estas son las validaciones principales que apliqué para evitar datos incorrectos:
 
-## 5. Tecnologías utilizadas
+1. No se pueden registrar dos MVP con el mismo nombre.
+2. Cada MVP debe tener por lo menos un mapa y no puede repetirlo.
+3. Los tiempos no pueden ser negativos y el máximo debe ser igual o mayor al mínimo.
+4. Un timer solo se genera cuando el nombre y el mapa coinciden con el catálogo.
+5. Solamente el administrador puede crear, editar o eliminar registros.
+6. Los GIF deben ser archivos válidos y no superar 5 MB.
 
-### Frontend
+Reiniciar un timer no elimina el historial. Esto es intencional porque el reset sirve para descartar una cuenta regresiva, no para borrar el registro de la muerte.
 
-- React, JavaScript y Vite.
-- CSS responsivo.
-- Lucide React.
+## Tecnologías utilizadas
 
-### Backend y datos
+- **Frontend:** React, JavaScript, Vite, CSS y Lucide React.
+- **Backend:** Python, Flask y Gunicorn.
+- **Base de datos:** SQLite.
+- **Consulta del ranking:** Bright Data y `urllib3`.
+- **Servidor:** Ubuntu, Nginx y systemd.
+- **Control de versiones:** Git y GitHub.
 
-- Python 3 y Flask.
-- SQLite y SQL relacional.
-- `urllib3` para comunicarse con Bright Data.
-- Gunicorn en producción.
+Elegí SQLite porque el tracker funciona en un solo VPS y no necesita administrar otro servidor de base de datos. Si en el futuro hubiera varias instancias escribiendo al mismo tiempo, consideraría migrarlo a PostgreSQL.
 
-### Infraestructura
-
-- Nginx como proxy inverso.
-- systemd para mantener el servicio activo.
-- VPS Ubuntu.
-- GitHub para control de versiones.
-
-## 6. Instrucciones de ejecución local
+## Cómo ejecutarlo localmente
 
 ### Requisitos
 
 - Python 3.10 o superior.
-- Node.js y pnpm, únicamente para recompilar el frontend.
-- Credenciales válidas de Bright Data para actualizar el ranking.
+- Token y Collector ID de Bright Data.
+- Node.js y pnpm solo si se quiere modificar el frontend.
 
-### 6.1 Backend en Windows
+### Windows
 
-Abre PowerShell dentro del proyecto:
+Abre PowerShell dentro de la carpeta del proyecto:
 
 ```powershell
-cd "C:\ruta\al\proyecto\testeo1_brightdata"
 py -3 -m venv venv
 .\venv\Scripts\Activate.ps1
 python -m pip install -r requirements.txt
 ```
 
-Configura las variables de esta sesión. No publiques el token ni las contraseñas:
+Configura los datos necesarios para esa sesión:
 
 ```powershell
 $env:BRIGHTDATA_API_TOKEN="TU_TOKEN"
@@ -141,73 +118,59 @@ $env:ADMIN_PASSWORD="TU_CONTRASENA"
 python app.py
 ```
 
-Abre [http://127.0.0.1:5000/testeo1/](http://127.0.0.1:5000/testeo1/).
+Después abre [http://127.0.0.1:5000/testeo1/](http://127.0.0.1:5000/testeo1/).
 
-### 6.2 Backend en Linux
+### Linux
 
 ```bash
-cd /ruta/al/proyecto/testeo1_brightdata
 python3 -m venv venv
 ./venv/bin/pip install -r requirements.txt
+
 export BRIGHTDATA_API_TOKEN="TU_TOKEN"
 export BRIGHTDATA_COLLECTOR_ID="TU_COLLECTOR_ID"
 export FLASK_SECRET_KEY="UNA_CLAVE_ALEATORIA_LARGA"
 export ADMIN_USERNAME="admin"
 export ADMIN_PASSWORD="TU_CONTRASENA"
+
 ./venv/bin/python app.py
 ```
 
-### 6.3 Inicialización de SQLite
+Las contraseñas y el token no se guardan en el repositorio. `.env.example` sirve únicamente como referencia.
 
-No se necesita instalar un servidor de base de datos. Al iniciar la aplicación:
+## Base de datos
 
-1. Se crea `tracker.db` si no existe.
-2. `schema.sql` crea tablas, relaciones, índices y restricciones.
-3. `seed.sql` carga el catálogo inicial cuando la base está vacía.
+No es necesario instalar SQLite por separado. En el primer inicio, el backend crea `tracker.db`, ejecuta `schema.sql` y carga el catálogo inicial desde `seed.sql`.
 
-La base y sus archivos auxiliares están excluidos de Git para evitar publicar datos reales.
+Para revisar la estructura durante la exposición se puede abrir `tracker.db` con DB Browser for SQLite. Por ejemplo, esta consulta muestra la relación entre MVP y mapas:
 
-### 6.4 Recompilar el frontend
-
-`dist/` se conserva para que Flask pueda servir la interfaz inmediatamente. Para regenerarlo:
-
-```bash
-cd frontend
-corepack enable
-pnpm install
-pnpm run build
-cd ..
+```sql
+SELECT
+    m.name AS mvp,
+    mp.map_name AS mapa,
+    mp.respawn_min_minutes AS minimo,
+    mp.respawn_max_minutes AS maximo
+FROM mvp_definitions AS m
+LEFT JOIN mvp_maps AS mp ON mp.mvp_id = m.id
+ORDER BY m.name, mp.position;
 ```
 
-## 7. Configuración de producción
+La base real, los respaldos y los archivos de configuración sensibles están excluidos mediante `.gitignore`.
 
-La carpeta `deploy/` incluye:
-
-- `sakura-testeo1.service`: servicio systemd en `/var/www/sakura-testeo1`.
-- `nginx-testeo1.conf`: ruta pública `/testeo1/` y proxy al backend.
-
-En el VPS, las variables sensibles se almacenan fuera del repositorio en:
-
-```text
-/etc/sakura-testeo1.env
-```
-
-## 8. Estructura del proyecto
+## Estructura del proyecto
 
 ```text
 testeo1_brightdata/
 |-- app.py                 Backend Flask, API y monitor
-|-- database.py            Persistencia SQLite y operaciones CRUD
-|-- schema.sql             Estructura relacional
-|-- seed.sql               Catálogo inicial
-|-- requirements.txt       Dependencias Python
-|-- frontend/              Código fuente React
-|-- dist/                  Frontend compilado listo para Flask
+|-- database.py            Consultas y operaciones de SQLite
+|-- schema.sql             Tablas, relaciones e índices
+|-- seed.sql               Catálogo inicial de MVP
+|-- requirements.txt       Dependencias de Python
+|-- frontend/              Código fuente de React
+|-- dist/                  Frontend compilado
 |-- deploy/                Configuración de Nginx y systemd
-|-- .env.example           Ejemplo sin secretos
-`-- README.md              Documentación principal
+|-- .env.example           Ejemplo de variables necesarias
+`-- README.md              Documentación del proyecto
 ```
-
 
 ## Autor
 
